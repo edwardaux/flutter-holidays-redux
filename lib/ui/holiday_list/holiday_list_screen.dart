@@ -5,6 +5,8 @@ import 'package:holidays/model/holiday_summary.dart';
 import 'package:holidays/redux/app/app_state.dart';
 import 'package:holidays/redux/holiday_list/holiday_list_actions.dart';
 import 'package:holidays/redux/holiday_list/holiday_list_state.dart';
+import 'package:holidays/ui/holiday/holiday_screen.dart';
+import 'package:holidays/ui/widgets/spinner.dart';
 import 'package:meta/meta.dart';
 import 'package:redux/redux.dart';
 
@@ -16,7 +18,7 @@ class HolidayListScreen extends StatelessWidget {
               appBar: AppBar(
                 title: Text(viewModel.pageTitle),
               ),
-              body: _createRefreshWidget(context, viewModel),
+              body: viewModel.isLoadingHoliday ? Spinner() : _createRefreshWidget(context, viewModel),
             ),
       );
 
@@ -34,7 +36,7 @@ class HolidayListScreen extends StatelessWidget {
   // returns a collection of widgets to be displayed in a list view. for the loading/error
   // states, it will be a list with only one widget in it.
   List<Widget> _createBodyWidgets(BuildContext context, _ViewModel viewModel) {
-    var summaryViewModels = viewModel.fetchableSummaryViewModels;
+    final summaryViewModels = viewModel.fetchableSummaryViewModels;
     if (summaryViewModels is FetchableLoading) {
       return [Text('Loading...')];
     } else if (summaryViewModels is FetchableSuccess<List<_SummaryViewModel>>) {
@@ -48,7 +50,21 @@ class HolidayListScreen extends StatelessWidget {
   }
 
   Widget _createHolidaySummaryWidget(BuildContext context, _SummaryViewModel summaryViewModel) {
-    return Row(children: [Text(summaryViewModel.title)]);
+    return GestureDetector(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(children: [Text(summaryViewModel.title)]),
+        ),
+        onTap: () {
+          final store = StoreProvider.of<AppState>(context);
+          final action = FetchHolidayAction(summaryViewModel.id);
+          store.dispatch(action);
+          action.completer.future.then((value) {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+              return HolidayScreen();
+            }));
+          });
+        });
   }
 }
 
@@ -58,24 +74,28 @@ class _ViewModel {
   final String pageTitle;
   // a collection of view models for each summary
   final Fetchable<List<_SummaryViewModel>> fetchableSummaryViewModels;
+  // are we currently fetching a holiday
+  final bool isLoadingHoliday;
 
-  _ViewModel._({@required this.pageTitle, @required this.fetchableSummaryViewModels});
+  _ViewModel._({@required this.pageTitle, @required this.fetchableSummaryViewModels, @required this.isLoadingHoliday});
 
   factory _ViewModel.create(HolidaySummariesState holidaySummariesState, {Function refreshCallback}) {
     final fetchableSummaryViewModels = holidaySummariesState.fetchableHolidaySummaries.map((List<HolidaySummary> summaries) {
       return summaries.map((HolidaySummary summary) => _SummaryViewModel(summary)).toList();
     });
-    return _ViewModel._(pageTitle: 'Holidays', fetchableSummaryViewModels: fetchableSummaryViewModels);
+    final loadingHoliday = holidaySummariesState.fetchableCurrentHoliday is FetchableLoading;
+    return _ViewModel._(pageTitle: 'Holidays', fetchableSummaryViewModels: fetchableSummaryViewModels, isLoadingHoliday: loadingHoliday);
   }
 }
 
 @immutable
 class _SummaryViewModel {
+  final int id;
   final String title;
 
-  _SummaryViewModel._({@required this.title});
+  _SummaryViewModel._({@required this.id, @required this.title});
 
   factory _SummaryViewModel(HolidaySummary summary) {
-    return _SummaryViewModel._(title: 'Destination: ' + summary.name);
+    return _SummaryViewModel._(id: summary.id, title: 'Destination: ' + summary.name);
   }
 }

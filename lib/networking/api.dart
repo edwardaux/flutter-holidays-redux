@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:holidays/model/holiday.dart';
 import 'package:holidays/model/holiday_summary.dart';
 
 class API {
@@ -18,6 +19,18 @@ class API {
       return Future.value([summary1, summary2]);
     } else {
       throw StateError("Network timed out");
+    }
+  }
+
+  Future<Holiday> fetchHoliday(int id) async {
+    // we'd normally call out to a network server of some kind, but for now,
+    // we'll just pause for a bit
+    await Future.delayed(const Duration(seconds: 1));
+
+    if (id == 1) {
+      return Future.value(Holiday(id: id, name: "Europe", details: "This is a European holiday"));
+    } else {
+      return Future.value(Holiday(id: id, name: "America", details: "This is an American holiday"));
     }
   }
 }
