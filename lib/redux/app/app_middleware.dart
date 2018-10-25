@@ -1,0 +1,29 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:holidays/networking/api.dart';
+import 'package:holidays/redux/app/app_actions.dart';
+import 'package:holidays/redux/app/app_state.dart';
+import 'package:holidays/redux/holiday_list/holiday_list_actions.dart';
+import 'package:holidays/redux/holiday_list/holiday_list_middleware.dart';
+import 'package:redux/redux.dart';
+
+List<Middleware<AppState>> createAppMiddleware(API api) {
+  var list = List<Middleware<AppState>>();
+  list.addAll(createHolidayListMiddleware(api));
+  list.add(_splashMiddleware());
+  return list;
+}
+
+Middleware<AppState> _splashMiddleware() {
+  return (Store<AppState> store, action, NextDispatcher next) async {
+    next(action);
+
+    if (action is InitAction) {
+      await Future.delayed(const Duration(seconds: 1));
+
+      store.dispatch(FetchHolidaySummariesAction());
+      Navigator.of(action.context).pushReplacementNamed('/holidayList');
+    }
+  };
+}

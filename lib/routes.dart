@@ -16,7 +16,7 @@ void navigateToHoliday({@required int id, @required BuildContext context, @requi
 
 Map<String, WidgetBuilder> getRoutes(BuildContext context, Store<AppState> store) {
   return {
-    '/': (BuildContext context) => new StoreBuilder<AppState>(
+    '/holidayList': (BuildContext context) => new StoreBuilder<AppState>(
           builder: (context, store) {
             return HolidayListScreen();
           },
