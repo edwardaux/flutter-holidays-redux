@@ -1,12 +1,10 @@
-import 'dart:async';
-
 import 'package:holidays/model/fetchable.dart';
 import 'package:holidays/model/holiday.dart';
 import 'package:holidays/model/holiday_summary.dart';
+import 'package:holidays/redux/app/app_actions.dart';
 
-class FetchHolidaySummariesAction {
-  final Completer completer;
-  FetchHolidaySummariesAction() : this.completer = Completer();
+class FetchHolidaySummariesAction extends CompleterAction {
+  FetchHolidaySummariesAction();
 }
 
 class ReceivedHolidaySummariesAction {
@@ -15,10 +13,9 @@ class ReceivedHolidaySummariesAction {
   ReceivedHolidaySummariesAction(this.fetchableHolidaySummaries);
 }
 
-class FetchHolidayAction {
+class FetchHolidayAction extends CompleterAction {
   final int id;
-  final Completer completer;
-  FetchHolidayAction(this.id) : this.completer = Completer();
+  FetchHolidayAction(this.id);
 }
 
 class ReceivedHolidayAction {
