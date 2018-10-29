@@ -7,6 +7,7 @@ import 'package:redux/redux.dart';
 
 List<Middleware<AppState>> createAuthenticationMiddleware(API api) => [
       TypedMiddleware<AppState, LoginAction>(_login(api)),
+      TypedMiddleware<AppState, LogoutAction>(_logout(api)),
     ];
 
 Middleware<AppState> _login(API api) {
@@ -25,6 +26,16 @@ Middleware<AppState> _login(API api) {
         action.completer.completeError(e);
         store.dispatch(LoginFailedAction(error: e));
       }
+    }
+  };
+}
+
+Middleware<AppState> _logout(API api) {
+  return (Store<AppState> store, action, NextDispatcher next) async {
+    next(action);
+
+    if (action is LogoutAction) {
+      globalNavigatorKey.currentState.pushReplacementNamed('/login');
     }
   };
 }
