@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:holidays/model/user.dart';
 import 'package:holidays/networking/api.dart';
 import 'package:holidays/redux/app/app_actions.dart';
 import 'package:holidays/redux/app/app_state.dart';
+import 'package:holidays/redux/auth/auth_actions.dart';
 import 'package:holidays/redux/auth/auth_middleware.dart';
 import 'package:holidays/redux/holiday_list/holiday_list_actions.dart';
 import 'package:holidays/redux/holiday_list/holiday_list_middleware.dart';
@@ -24,8 +26,15 @@ Middleware<AppState> _splashMiddleware() {
     if (action is InitAction) {
       await Future.delayed(const Duration(seconds: 1));
 
-      store.dispatch(FetchHolidaySummariesAction());
-      globalNavigatorKey.currentState.pushReplacementNamed('/holidayList');
+      final isLoggedIn = false;
+      final loggedInUser = isLoggedIn ? User(name: "john smith", userid: "john") : null;
+      if (loggedInUser != null) {
+        store.dispatch(LoginSuccessfulAction(user: loggedInUser));
+        store.dispatch(FetchHolidaySummariesAction());
+        globalNavigatorKey.currentState.pushReplacementNamed('/holidayList');
+      } else {
+        globalNavigatorKey.currentState.pushReplacementNamed('/login');
+      }
     }
   };
 }

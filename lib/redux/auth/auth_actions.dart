@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:holidays/model/user.dart';
 import 'package:holidays/redux/app/app_actions.dart';
 import 'package:meta/meta.dart';
