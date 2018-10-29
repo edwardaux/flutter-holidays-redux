@@ -22,6 +22,7 @@ class HolidaysApp extends StatelessWidget {
         store: store,
         child: MaterialApp(
           title: 'Holidays Demo',
+          navigatorKey: globalNavigatorKey,
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),

@@ -8,7 +8,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreBuilder(
-        onInit: (Store<AppState> store) => store.dispatch(InitAction(context)),
+        onInit: (Store<AppState> store) => store.dispatch(InitAction()),
         builder: (BuildContext context, Store<AppState> store) {
           return Scaffold(body: Center(child: Text('LOGO')));
         });

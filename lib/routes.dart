@@ -6,6 +6,8 @@ import 'package:holidays/ui/holiday/holiday_screen.dart';
 import 'package:holidays/ui/holiday_list/holiday_list_screen.dart';
 import 'package:redux/redux.dart';
 
+final GlobalKey<NavigatorState> globalNavigatorKey = new GlobalKey<NavigatorState>();
+
 void navigateToHoliday({@required int id, @required BuildContext context, @required Store<AppState> store}) {
   final action = FetchHolidayAction(id);
   store.dispatch(action);
