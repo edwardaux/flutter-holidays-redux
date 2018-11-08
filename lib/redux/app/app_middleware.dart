@@ -31,7 +31,7 @@ Middleware<AppState> _splashMiddleware() {
       if (loggedInUser != null) {
         store.dispatch(LoginSuccessfulAction(user: loggedInUser));
         store.dispatch(FetchHolidaySummariesAction());
-        globalNavigatorKey.currentState.pushReplacementNamed('/holidayList');
+        globalNavigatorKey.currentState.pushReplacementNamed('/dashboard');
       } else {
         globalNavigatorKey.currentState.pushReplacementNamed('/login');
       }
