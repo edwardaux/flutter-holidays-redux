@@ -17,6 +17,7 @@ class HolidayListScreen extends StatelessWidget {
         converter: (Store<AppState> store) => _ViewModel.create(store.state.holidaySummariesState),
         builder: (BuildContext context, _ViewModel viewModel) => Scaffold(
               appBar: AppBar(
+                automaticallyImplyLeading: false,
                 title: Text(viewModel.pageTitle),
                 actions: <Widget>[
                   IconButton(
