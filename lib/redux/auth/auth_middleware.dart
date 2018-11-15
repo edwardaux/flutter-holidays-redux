@@ -35,7 +35,7 @@ Middleware<AppState> _logout(API api) {
     next(action);
 
     if (action is LogoutAction) {
-      globalNavigatorKey.currentState.pushReplacementNamed('/login');
+      displayLoginScreen();
     }
   };
 }

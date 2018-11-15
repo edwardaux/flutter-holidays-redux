@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:holidays/redux/app/app_state.dart';
@@ -21,13 +22,21 @@ void navigateToHoliday({@required int id, @required BuildContext context, @requi
   });
 }
 
+// it annoys me that we have to pull this out into a separate function
+// instead of being able to invoke `.pushReplacementNamed('/login')` like
+// we can do with the rest of the routes. However, I haven't been able to
+// find a way to push with the route name, yet still go modal.
+void displayLoginScreen() {
+  globalNavigatorKey.currentState.pushReplacement(new MaterialPageRoute<Null>(
+    builder: (BuildContext context) {
+      return LoginScreen();
+    },
+    fullscreenDialog: true,
+  ));
+}
+
 Map<String, WidgetBuilder> getRoutes(BuildContext context, Store<AppState> store) {
   return {
-    '/login': (BuildContext context) => new StoreBuilder<AppState>(
-          builder: (context, store) {
-            return LoginScreen();
-          },
-        ),
     '/dashboard': (BuildContext context) => new StoreBuilder<AppState>(
           builder: (context, store) {
             return DashboardScreen();

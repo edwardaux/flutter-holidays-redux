@@ -16,10 +16,11 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) => StoreConnector<AppState, _ViewModel>(
       converter: (Store<AppState> store) => _ViewModel.create(store: store),
       builder: (BuildContext context, _ViewModel viewModel) => Scaffold(
-            appBar: AppBar(title: Text(viewModel.pageTitle)),
             body: Container(
               padding: EdgeInsets.all(16.0),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   TextField(
                     controller: _useridController,
