@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:holidays/networking/api.dart';
 import 'package:holidays/redux/app/app_actions.dart';
 import 'package:holidays/redux/app/app_state.dart';
+import 'package:holidays/redux/auth/auth_middleware.dart';
 import 'package:holidays/redux/holiday_list/holiday_list_actions.dart';
 import 'package:holidays/redux/holiday_list/holiday_list_middleware.dart';
 import 'package:redux/redux.dart';
@@ -11,6 +12,7 @@ import 'package:redux/redux.dart';
 List<Middleware<AppState>> createAppMiddleware(API api) {
   var list = List<Middleware<AppState>>();
   list.addAll(createHolidayListMiddleware(api));
+  list.addAll(createAuthenticationMiddleware(api));
   list.add(_splashMiddleware());
   return list;
 }

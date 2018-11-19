@@ -3,8 +3,22 @@ import 'dart:math';
 
 import 'package:holidays/model/holiday.dart';
 import 'package:holidays/model/holiday_summary.dart';
+import 'package:holidays/model/user.dart';
+import 'package:meta/meta.dart';
 
 class API {
+  Future<User> login({@required String userid, @required String password}) async {
+    // we'd normally call out to a network server of some kind, but for now,
+    // we'll just pause for a bit
+    await Future.delayed(const Duration(seconds: 1));
+
+    if (userid == password) {
+      return Future.value(User(userid: userid, name: '$userid $userid'));
+    } else {
+      throw StateError('Invalid userid and password');
+    }
+  }
+
   Future<List<HolidaySummary>> fetchHolidaySummaries() async {
     // we'd normally call out to a network server of some kind, but for now,
     // we'll just pause for a bit
