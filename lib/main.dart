@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:holidays/networking/api.dart';
 import 'package:holidays/redux/app/app_reducers.dart';
 import 'package:holidays/redux/app/app_state.dart';
 import 'package:holidays/redux/holiday_list/holiday_list_actions.dart';
@@ -13,7 +14,7 @@ class HolidaysApp extends StatelessWidget {
   final Store<AppState> store = Store<AppState>(
     appReducer,
     initialState: AppState.initial(),
-    middleware: createHolidayListMiddleware(),
+    middleware: createHolidayListMiddleware(API()),
   );
 
   HolidaysApp() {
