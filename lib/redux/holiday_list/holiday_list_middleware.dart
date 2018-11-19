@@ -6,6 +6,7 @@ import 'package:redux/redux.dart';
 
 List<Middleware<AppState>> createHolidayListMiddleware(API api) => [
       TypedMiddleware<AppState, FetchHolidaySummariesAction>(_fetchHolidaySummaries(api)),
+      TypedMiddleware<AppState, FetchHolidayAction>(_fetchHoliday(api)),
     ];
 
 Middleware<AppState> _fetchHolidaySummaries(API api) {
@@ -21,6 +22,24 @@ Middleware<AppState> _fetchHolidaySummaries(API api) {
       } catch (e) {
         action.completer.completeError(e);
         store.dispatch(ReceivedHolidaySummariesAction(Fetchable.error(e)));
+      }
+    }
+  };
+}
+
+Middleware<AppState> _fetchHoliday(API api) {
+  return (Store<AppState> store, action, NextDispatcher next) async {
+    next(action);
+
+    if (action is FetchHolidayAction) {
+      try {
+        final holiday = await api.fetchHoliday(action.id);
+
+        action.completer.complete();
+        store.dispatch(ReceivedHolidayAction(Fetchable.success(holiday)));
+      } catch (e) {
+        action.completer.completeError(e);
+        store.dispatch(ReceivedHolidayAction(Fetchable.error(e)));
       }
     }
   };
