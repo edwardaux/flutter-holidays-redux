@@ -5,7 +5,7 @@ import 'package:holidays/redux/app/app_reducers.dart';
 import 'package:holidays/redux/app/app_state.dart';
 import 'package:holidays/redux/holiday_list/holiday_list_actions.dart';
 import 'package:holidays/redux/holiday_list/holiday_list_middleware.dart';
-import 'package:holidays/ui/holiday_list/holiday_list_screen.dart';
+import 'package:holidays/routes.dart';
 import 'package:redux/redux.dart';
 
 void main() => runApp(HolidaysApp());
@@ -30,7 +30,8 @@ class HolidaysApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: HolidayListScreen(),
+          routes: getRoutes(context, store),
+          initialRoute: '/',
         ),
       );
 }

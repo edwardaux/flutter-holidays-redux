@@ -5,7 +5,6 @@ import 'package:holidays/model/holiday_summary.dart';
 import 'package:holidays/redux/app/app_state.dart';
 import 'package:holidays/redux/holiday_list/holiday_list_actions.dart';
 import 'package:holidays/redux/holiday_list/holiday_list_state.dart';
-import 'package:holidays/ui/holiday/holiday_screen.dart';
 import 'package:holidays/ui/widgets/spinner.dart';
 import 'package:meta/meta.dart';
 import 'package:redux/redux.dart';
@@ -60,9 +59,7 @@ class HolidayListScreen extends StatelessWidget {
           final action = FetchHolidayAction(summaryViewModel.id);
           store.dispatch(action);
           action.completer.future.then((value) {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-              return HolidayScreen();
-            }));
+            Navigator.of(context).pushNamed('/holiday');
           });
         });
   }
