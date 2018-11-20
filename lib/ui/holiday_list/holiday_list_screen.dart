@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:holidays/model/fetchable.dart';
 import 'package:holidays/model/holiday_summary.dart';
 import 'package:holidays/redux/app/app_state.dart';
+import 'package:holidays/redux/auth/auth_actions.dart';
 import 'package:holidays/redux/holiday_list/holiday_list_actions.dart';
 import 'package:holidays/redux/holiday_list/holiday_list_state.dart';
 import 'package:holidays/routes.dart';
@@ -17,6 +18,14 @@ class HolidayListScreen extends StatelessWidget {
         builder: (BuildContext context, _ViewModel viewModel) => Scaffold(
               appBar: AppBar(
                 title: Text(viewModel.pageTitle),
+                actions: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.backspace),
+                    onPressed: () {
+                      StoreProvider.of<AppState>(context).dispatch(LogoutAction());
+                    },
+                  ),
+                ],
               ),
               body: viewModel.isLoadingHoliday ? Spinner() : _createRefreshWidget(context, viewModel),
             ),

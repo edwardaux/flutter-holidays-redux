@@ -26,7 +26,7 @@ Middleware<AppState> _splashMiddleware() {
     if (action is InitAction) {
       await Future.delayed(const Duration(seconds: 1));
 
-      final isLoggedIn = false;
+      final isLoggedIn = true;
       final loggedInUser = isLoggedIn ? User(name: "john smith", userid: "john") : null;
       if (loggedInUser != null) {
         store.dispatch(LoginSuccessfulAction(user: loggedInUser));
