@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:holidays/redux/app/app_state.dart';
 import 'package:holidays/redux/holiday_list/holiday_list_actions.dart';
 import 'package:holidays/ui/auth/login_screen.dart';
+import 'package:holidays/ui/dashboard/dashboard_screen.dart';
 import 'package:holidays/ui/holiday/holiday_screen.dart';
 import 'package:holidays/ui/holiday_list/holiday_list_screen.dart';
 import 'package:redux/redux.dart';
@@ -22,6 +23,11 @@ Map<String, WidgetBuilder> getRoutes(BuildContext context, Store<AppState> store
     '/login': (BuildContext context) => new StoreBuilder<AppState>(
           builder: (context, store) {
             return LoginScreen();
+          },
+        ),
+    '/dashboard': (BuildContext context) => new StoreBuilder<AppState>(
+          builder: (context, store) {
+            return DashboardScreen();
           },
         ),
     '/holidayList': (BuildContext context) => new StoreBuilder<AppState>(

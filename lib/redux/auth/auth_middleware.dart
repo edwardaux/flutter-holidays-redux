@@ -21,7 +21,7 @@ Middleware<AppState> _login(API api) {
         action.completer.complete();
         store.dispatch(LoginSuccessfulAction(user: user));
         store.dispatch(FetchHolidaySummariesAction());
-        globalNavigatorKey.currentState.pushReplacementNamed('/holidayList');
+        globalNavigatorKey.currentState.pushReplacementNamed('/dashboard');
       } catch (e) {
         action.completer.completeError(e);
         store.dispatch(LoginFailedAction(error: e));
