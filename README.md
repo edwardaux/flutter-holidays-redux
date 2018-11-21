@@ -50,3 +50,6 @@ Also, I have spent literally zero effort in trying to style the application. Tha
 * [Contains a number of great examples](https://github.com/ericwindmill/flutter_by_example_apps)
 * [Real world app - movie browser](https://github.com/roughike/inKino)
 * [Real world app - invoice management](https://github.com/invoiceninja/flutter-mobile)
+
+## Feedback
+This is the first time I've tried to use github pull requests as a means of communicating a gradual implementation path. If you have any suggestions, please feel free to follow me on [twitter](https://twitter.com/edwardaux) or send me an [email](craig@blackdogfoundry.com).
