@@ -17,6 +17,7 @@ class ProfileScreen extends StatelessWidget {
         },
         builder: (BuildContext context, _ViewModel viewModel) => Scaffold(
               appBar: AppBar(
+                automaticallyImplyLeading: false,
                 title: Text(viewModel.pageTitle),
               ),
               body: Text(viewModel.name),
