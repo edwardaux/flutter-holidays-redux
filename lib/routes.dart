@@ -6,9 +6,12 @@ import 'package:holidays/ui/auth/login_screen.dart';
 import 'package:holidays/ui/dashboard/dashboard_screen.dart';
 import 'package:holidays/ui/holiday/holiday_screen.dart';
 import 'package:holidays/ui/holiday_list/holiday_list_screen.dart';
+import 'package:holidays/ui/profile/profile_screen.dart';
 import 'package:redux/redux.dart';
 
 final GlobalKey<NavigatorState> globalNavigatorKey = new GlobalKey<NavigatorState>();
+final GlobalKey<NavigatorState> holidaysTabNavigatorKey = new GlobalKey<NavigatorState>();
+final GlobalKey<NavigatorState> profileTabNavigatorKey = new GlobalKey<NavigatorState>();
 
 void navigateToHoliday({@required int id, @required BuildContext context, @required Store<AppState> store}) {
   final action = FetchHolidayAction(id);
@@ -38,6 +41,11 @@ Map<String, WidgetBuilder> getRoutes(BuildContext context, Store<AppState> store
     '/holiday': (BuildContext context) => new StoreBuilder<AppState>(
           builder: (context, store) {
             return HolidayScreen();
+          },
+        ),
+    '/profile': (BuildContext context) => new StoreBuilder<AppState>(
+          builder: (context, store) {
+            return ProfileScreen();
           },
         ),
   };
