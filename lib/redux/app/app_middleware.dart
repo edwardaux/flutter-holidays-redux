@@ -33,7 +33,7 @@ Middleware<AppState> _splashMiddleware() {
         store.dispatch(FetchHolidaySummariesAction());
         globalNavigatorKey.currentState.pushReplacementNamed('/dashboard');
       } else {
-        globalNavigatorKey.currentState.pushReplacementNamed('/login');
+        displayLoginScreen();
       }
     }
   };
